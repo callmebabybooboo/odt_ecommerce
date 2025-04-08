@@ -4,6 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :email, format: {
+  with: /\A[^@\s]+@[^@\s]+\.[^@\s]+\z/,
+  message: "รูปแบบอีเมลไม่ถูกต้อง เช่น example@email.com"
+  }
+  validates :password, length: { minimum: 6 }, if: -> { password.present? }
+
   def admin?
     role == 1
   end

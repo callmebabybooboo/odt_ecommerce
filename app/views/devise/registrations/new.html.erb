@@ -1,0 +1,63 @@
+<div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">สมัครสมาชิก</h2>
+
+  <%= form_with model: resource, url: registration_path(resource_name), local: true, 
+      data: { 
+        controller: "registration-validation",
+        action: "submit->registration-validation#validate"
+      },
+      html: { class: "space-y-4" } do |f| %>
+
+    <%# email filed %>
+    <%= f.text_field :email, 
+        placeholder: "อีเมล", 
+        autocomplete: "email", 
+        autofocus: true, 
+        data: { registration_validation_target: "email" },
+        class: "w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-gray-800" %>
+    <p class="text-red-600 text-sm mt-1 hidden" data-registration-validation-target="emailError"></p>
+    <% if resource.errors[:email].present? %>
+      <p class="text-red-600 text-sm mt-1">
+        <%= resource.errors[:email].first %>
+      </p>
+    <% end %>
+
+    <%# password field %>
+    <div class="relative">
+      <%= f.password_field :password,
+          placeholder: "รหัสผ่าน",
+          autocomplete: "new-password",
+          data: { registration_validation_target: "password"},
+          class: "w-full border border-gray-300 rounded-lg p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-gray-800"%>
+      <button 
+          type="button"
+          data-action="registration-validation#togglePassword"
+          data-registration-validation-target="togglePasswordButton"
+          class="absolute right-3 top-3 text-sm text-blue-600 hover:underline">
+          แสดง
+      </button>
+    </div>
+    <p class="text-red-600 text-sm mt-1 hidden" data-registration-validation-target="passwordError"></p>
+
+    <%# password confirmation field %>
+    <%= f.password_field :password_confirmation, 
+        placeholder: "ยืนยันรหัสผ่าน", 
+        autocomplete: "new-password", 
+        data: { registration_validation_target: "passwordConfirmation" },
+        class: "w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 text-gray-800" %>
+    <p class="text-red-600 text-sm mt-1 hidden" data-registration-validation-target="passwordConfirmationError"></p>
+    
+
+    <%# submit create button %>
+    <%= f.submit "สร้างบัญชีใหม่", 
+        class: "block w-full bg-green-600 hover:bg-green-700 text-white text-lg font-semibold py-2.5 rounded-lg text-center transition duration-200" %>
+
+    <%# link to sign in %>
+    <div class="text-center mt-4">
+      <p class="text-gray-600">
+        มีบัญชีอยู่แล้ว? 
+        <%= link_to "เข้าสู่ระบบ", new_session_path(resource_name), class: "text-blue-600 hover:underline" %>
+      </p>
+    </div>
+  <% end %>
+</div>

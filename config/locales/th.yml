@@ -1,0 +1,12 @@
+th:
+  devise:
+    failure:
+      user:
+        invalid: "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email: 
+              taken: "อีเมลนี้มีอยู่แล้ว"
