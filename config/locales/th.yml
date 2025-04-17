@@ -3,6 +3,7 @@ th:
     failure:
       user:
         invalid: "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
+        not_found_in_database: "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
   activerecord:
     errors:
       models:
