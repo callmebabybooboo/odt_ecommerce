@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_19_074516) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_19_074554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "option_values", force: :cascade do |t|
+    t.string "value"
+    t.bigint "option_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_id"], name: "index_option_values_on_option_id"
+  end
 
   create_table "options", force: :cascade do |t|
     t.string "name"
@@ -53,5 +61,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_19_074516) do
     t.index ["product_id"], name: "index_variants_on_product_id"
   end
 
+  add_foreign_key "option_values", "options"
   add_foreign_key "variants", "products"
 end
