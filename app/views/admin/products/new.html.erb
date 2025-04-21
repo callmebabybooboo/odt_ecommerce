@@ -6,12 +6,15 @@
       <%= f.text_field :name, placeholder: "ชื่อสินค้า", class: "w-full p-3 border rounded-lg" %>
       <%= f.text_area :description, placeholder: "รายละเอียดสินค้า", class: "w-full p-3 border rounded-lg" %>
       <%= f.select :category, 
-             Product::CATEGORIES, 
-             { prompt: "เลือกหมวดหมู่" }, 
-             class: "w-full p-3 border rounded-lg" %>
+        Product::CATEGORIES, 
+        { prompt: "เลือกหมวดหมู่" }, 
+        class: "w-full p-3 border rounded-lg" %>
       <%= f.number_field :base_price, placeholder: "ราคา", step: 0.01, class: "w-full p-3 border rounded-lg" %>
       <%= f.number_field :stock, placeholder: "จำนวนสินค้า", class: "w-full p-3 border rounded-lg" %>
-      <%= f.select :status, [["แสดง", "show"], ["ไม่แสดง", "hide"]], {}, class: "w-full p-3 border rounded-lg" %>
+      <%= f.select :status,
+        Product::STATUS_OPTIONS,
+        { prompt: "เลือกสถานะสินค้า" },
+        class: "w-full p-3 border rounded-lg" %>
       <%= f.file_field :cover_image, class: "w-full p-3 border rounded-lg" %>
 
       <div class="mt-6">
