@@ -1,0 +1,19 @@
+<div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-3xl mx-auto">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">เพิ่มสินค้าใหม่</h2>
+
+  <%= form_with model: @product, url: admin_products_path, local: true, html: { multipart: true } do |f| %>
+    <div class="space-y-4">
+      <%= f.text_field :name, placeholder: "ชื่อสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <%= f.text_area :description, placeholder: "รายละเอียดสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <%= f.text_field :category, placeholder: "หมวดหมู่", class: "w-full p-3 border rounded-lg" %>
+      <%= f.number_field :base_price, placeholder: "ราคา", step: 0.01, class: "w-full p-3 border rounded-lg" %>
+      <%= f.number_field :stock, placeholder: "จำนวนสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <%= f.select :status, [["แสดง", "show"], ["ไม่แสดง", "hide"]], {}, class: "w-full p-3 border rounded-lg" %>
+      <%= f.file_field :cover_image, class: "w-full p-3 border rounded-lg" %>
+
+      <div class="mt-6">
+        <%= f.submit "สร้างสินค้า", class: "w-full bg-green-600 text-white py-2 rounded" %>
+      </div>
+    </div>
+  <% end %>
+</div>
