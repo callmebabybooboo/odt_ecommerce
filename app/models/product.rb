@@ -14,10 +14,11 @@ class Product < ApplicationRecord
   validates :category, inclusion: { in: CATEGORIES }
   validates :base_price,
     numericality: { greater_than_or_equal_to: 0 },
-    allow_nil: false
+    format: { with: /\A\d+(\.\d{1,2})?\z/ },
+    presence: true
   validates :stock,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 },
-    allow_nil: false
+    presence: true
   validates :cover_image,
     attached: true,
     content_type: [ "image/png", "image/jpeg" ],

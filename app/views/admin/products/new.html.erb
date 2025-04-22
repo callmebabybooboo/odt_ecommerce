@@ -21,12 +21,12 @@
         <p class="text-red-600 text-sm mt-1"><%= @product.errors[:category].first %></p>
       <% end %>
 
-      <%= f.number_field :base_price, placeholder: "ราคา", step: 0.01, class: "w-full p-3 border rounded-lg" %>
+      <%= f.text_field :base_price, placeholder: "ราคา", class: "w-full p-3 border rounded-lg" %>
       <% if @product.errors[:base_price].present? %>
         <p class="text-red-600 text-sm mt-1"><%= @product.errors[:base_price].first %></p>
       <% end %>
 
-      <%= f.number_field :stock, placeholder: "จำนวนสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <%= f.text_field :stock, placeholder: "จำนวนสินค้า", class: "w-full p-3 border rounded-lg" %>
       <% if @product.errors[:stock].present? %>
         <p class="text-red-600 text-sm mt-1"><%= @product.errors[:stock].first %></p>
       <% end %>
