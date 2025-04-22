@@ -4,18 +4,45 @@
   <%= form_with model: @product, url: admin_products_path, local: true, html: { multipart: true } do |f| %>
     <div class="space-y-4">
       <%= f.text_field :name, placeholder: "ชื่อสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:name].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:name].first %></p>
+      <% end %>
+
       <%= f.text_area :description, placeholder: "รายละเอียดสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:description].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:description].first %></p>
+      <% end %>
+
       <%= f.select :category, 
         Product::CATEGORIES, 
         { prompt: "เลือกหมวดหมู่" }, 
         class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:category].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:category].first %></p>
+      <% end %>
+
       <%= f.number_field :base_price, placeholder: "ราคา", step: 0.01, class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:base_price].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:base_price].first %></p>
+      <% end %>
+
       <%= f.number_field :stock, placeholder: "จำนวนสินค้า", class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:stock].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:stock].first %></p>
+      <% end %>
+      
       <%= f.select :status,
         Product::STATUS_OPTIONS,
         { prompt: "เลือกสถานะสินค้า" },
         class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:status].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:status].first %></p>
+      <% end %>
+
       <%= f.file_field :cover_image, class: "w-full p-3 border rounded-lg" %>
+      <% if @product.errors[:cover_image].present? %>
+        <p class="text-red-600 text-sm mt-1"><%= @product.errors[:cover_image].first %></p>
+      <% end %>
 
       <div class="mt-6">
         <%= f.submit "สร้างสินค้า", class: "w-full bg-green-600 text-white py-2 rounded" %>

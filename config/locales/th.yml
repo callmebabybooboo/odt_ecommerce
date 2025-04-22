@@ -11,3 +11,21 @@ th:
           attributes:
             email: 
               taken: "อีเมลนี้มีอยู่แล้ว"
+        product:
+          attributes:
+            name: 
+              blank: "ชื่อสินค้าห้ามเว้นว่าง"
+            base_price: 
+              blank: "ราคาสินค้าห้ามเว้นว่าง"
+            category: 
+              blank: "กรุณาเลือกหมวดหมู่"
+            stock:
+              blank: "จำนวนสินค้าห้ามเว้นว่าง"
+            description: 
+              blank: "คำอธิบายสินค้าห้ามเว้นว่าง"
+            status: 
+              blank: "กรุณาเลือกสถานะ"
+            cover_image: 
+              blank: "รูปภาพสินค้าห้ามเว้นว่าง"
+              content_type_invalid: "รูปภาพสินค้าต้องเป็นไฟล์รูปภาพนามสกุล .jpg/.jpeg/.png เท่านั้น"
+              file_size_not_less_than: "ขนาดไฟล์รูปภาพสินค้าต้องไม่เกิน 10 MB"

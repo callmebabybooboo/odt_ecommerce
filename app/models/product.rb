@@ -2,11 +2,25 @@ class Product < ApplicationRecord
   has_many :variants, dependent: :destroy
   has_one_attached :cover_image
 
-  validates :name, :description, :category, :base_price, :status, :stock, presence: true
-
   CATEGORIES = [ "เสื้อผ้า", "แก้ว", "หมวก", "ของใช้ทั่วไป", "อื่นๆ" ]
-  validates :category, inclusion: { in: CATEGORIES, message: "กรุณาเลือกหมวดหมู่" }
-
   STATUS_OPTIONS = [ "แสดงสินค้า", "ไม่แสดงสินค้า" ]
-  validates :status, inclusion: { in: STATUS_OPTIONS, message: "กรุณาเลือกสถานะ" }
+
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :category, presence: true
+  validates :base_price, presence: true
+  validates :status, presence: true
+  validates :stock, presence: true
+  validates :category, inclusion: { in: CATEGORIES }
+  validates :base_price,
+    numericality: { greater_than_or_equal_to: 0 },
+    allow_nil: false
+  validates :stock,
+    numericality: { only_integer: true, greater_than_or_equal_to: 0 },
+    allow_nil: false
+  validates :cover_image,
+    attached: true,
+    content_type: [ "image/png", "image/jpeg" ],
+    size: { less_than: 10.megabytes }
+  validates :status, inclusion: { in: STATUS_OPTIONS }
 end
