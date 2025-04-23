@@ -3,6 +3,9 @@ class Product < ApplicationRecord
   has_one_attached :cover_image
   has_many_attached :images
 
+  has_many :cart_items
+  has_many :carts, through: :cart_items
+
   CATEGORIES = [ "เสื้อผ้า", "แก้ว", "หมวก", "ของใช้ทั่วไป", "อื่นๆ" ]
   STATUS_OPTIONS = [ "แสดงสินค้า", "ไม่แสดงสินค้า" ]
 
