@@ -1,0 +1,16 @@
+<nav class="bg-white shadow-md p-4 flex justify-between items-center">
+    <div class="text-xl font-bold text-gray-800">
+        <%= link_to ENV["APP_NAME"], authenticated_root_path %>
+    </div>
+    <div class="flex items-center space-x-4">
+        <% if user_signed_in? %>
+            <% if current_user.admin? %>
+                <%= link_to "เพิ่มสินค้า", new_admin_product_path, class: "text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm font-semibold" %>
+            <% end %>
+            <%= link_to "ออกจากระบบ", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "text-gray-600 hover:text-red-600 text-sm" %>
+        <% else %>
+            <%= link_to "เข้าสู่ระบบ", new_user_session_path, class: "text-gray-600 hover:text-blue-600 text-sm" %>
+            <%= link_to "สมัครสมาชิก", new_user_registration_path, class: "text-gray-600 hover:text-blue-600 text-sm" %>
+        <% end %>
+    </div>
+</nav>
