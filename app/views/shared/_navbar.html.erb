@@ -7,6 +7,9 @@
             <% if current_user.admin? %>
                 <%= link_to "เพิ่มสินค้า", new_admin_product_path, class: "text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm font-semibold" %>
             <% end %>
+            <% if current_user.user? %>
+                <%= link_to "ตะกร้าสินค้า", cart_path, class: "text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm font-semibold" %>
+            <% end %>
             <%= link_to "ออกจากระบบ", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class: "text-gray-600 hover:text-red-600 text-sm" %>
         <% else %>
             <%= link_to "เข้าสู่ระบบ", new_user_session_path, class: "text-gray-600 hover:text-blue-600 text-sm" %>

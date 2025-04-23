@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resource :cart, only: [ :show ]
+  resources :cart_items, only: [ :create, :update, :destroy ]
+
   devise_for :users
 
   authenticated :user do
