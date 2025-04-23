@@ -29,7 +29,16 @@
         <h2 class="text-lg font-semibold text-gray-700 mb-1">รายละเอียดสินค้า</h2>
         <p class="text-gray-700 leading-relaxed"><%= @product.description %></p>
       </div>
-      <%= button_to "เพิ่มลงตะกร้า", cart_items_path(product_id: @product.id), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+
+      <div class="mt-6">
+        <h2 class="text-red-700 leading-relaxed mb-1">จำนวนสินค้าคงเหลือ: <%= @product.stock %> </h2>
+      </div>
+
+      <% if current_user.user? %>
+        <div class="mt-6">
+          <%= button_to "เพิ่มลงตะกร้า", cart_items_path(product_id: @product.id), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+        </div>
+      <% end %>
     </div>
 
   </div>
