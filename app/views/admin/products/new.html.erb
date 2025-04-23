@@ -39,10 +39,46 @@
         <p class="text-red-600 text-sm mt-1"><%= @product.errors[:status].first %></p>
       <% end %>
 
-      <%= f.file_field :cover_image, class: "w-full p-3 border rounded-lg" %>
+      <div data-controller="image-preview-single">
+        <label for="product_cover_image"
+          class="w-full p-3 border rounded-lg text-gray-800 block text-left cursor-pointer hover:bg-gray-100 whitespace-nowrap overflow-hidden text-ellipsis">
+          เลือกรูปภาพสินค้าหลัก
+        </label>
+        <%= f.file_field :cover_image,
+              id: "product_cover_image",
+              class: "hidden",
+              data: {
+                action: "change->image-preview-single#preview",
+                image_preview_single_target: "input"
+              } %>
+        <div data-image-preview-single-target="placeholder" class="mt-2 text-gray-500 text-sm">
+          เลือก 1 รูป เท่านั้น
+        </div>
+        <div class="mt-2" data-image-preview-single-target="preview"></div>
+      </div>
       <% if @product.errors[:cover_image].present? %>
         <p class="text-red-600 text-sm mt-1"><%= @product.errors[:cover_image].first %></p>
       <% end %>
+
+      <div data-controller="image-preview">
+        <label for="product_images"
+          class="w-full p-3 border rounded-lg text-gray-800 block text-left cursor-pointer hover:bg-gray-100">
+          เลือกรูปภาพสินค้าเพิ่มเติม
+        </label>
+        <%= f.file_field :images,
+              multiple: true,
+              id: "product_images",
+              class: "hidden",
+              data: {
+                action: "change->image-preview#previewMultiple",
+                image_preview_target: "input"
+              } %>
+        <div data-image-preview-target="placeholder" class="mt-2 text-gray-500 text-sm">
+          ยังไม่มีภาพที่เลือก
+        </div>
+        <div class="mt-2 grid grid-cols-3 gap-2" data-image-preview-target="previews">
+        </div>
+      </div>
 
       <div class="mt-6">
         <%= f.submit "สร้างสินค้า", class: "w-full bg-green-600 text-white py-2 rounded" %>
