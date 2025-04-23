@@ -4,6 +4,15 @@ th:
       user:
         invalid: "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
         not_found_in_database: "อีเมลหรือรหัสผ่านไม่ถูกต้อง"
+    sessions:
+      user:
+        signed_in: "คุณได้เข้าสู่ระบบแล้ว"
+        signed_out: "คุณได้ออกจากระบบแล้ว"
+    registrations:
+      user:
+        signed_up: "คุณได้ลงทะเบียนเรียบร้อยแล้ว"
+        updated: "ข้อมูลของคุณได้ถูกอัปเดตเรียบร้อยแล้ว"
+        destroyed: "บัญชีของคุณได้ถูกลบเรียบร้อยแล้ว"
   activerecord:
     errors:
       models:
