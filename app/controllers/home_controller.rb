@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   before_action :authenticate_user!
+
   def index
-    @app_name = ENV["APP_NAME"]
+    @products = Product.order(created_at: :desc)
   end
 end

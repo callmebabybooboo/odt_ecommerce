@@ -1,3 +1,16 @@
-<div>
-  <h1 class="text-2xl font-bold text-blue-600 bg-amber-300">ยินดีต้อนรับสู่ <%= @app_name %></h1>
+<div class="w-6xl mx-auto px-2 py-8">
+  <h1 class="text-2xl font-bold mb-6 text-gray-800">รายการสินค้า</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @products.each do |product| %>
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <% if product.cover_image.attached? %>
+          <%= image_tag product.cover_image.variant(resize_to_limit: [300, 300]).processed, class: "w-full h-64 object-cover rounded" %>
+        <% end %>
+        <h2 class="text-lg font-semibold mt-4 text-gray-900"><%= product.name %></h2>
+        <p class="text-sm text-gray-600 mb-2"><%= product.category %></p>
+        <p class="text-green-600 font-bold"><%= number_to_currency(product.base_price, unit: "฿") %></p>
+      </div>
+    <% end %>
+  </div>
 </div>
