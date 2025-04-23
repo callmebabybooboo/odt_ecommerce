@@ -16,6 +16,11 @@
     </div>
 
     <div>
+      <% if current_user.admin? %>
+        <div class="mt-6">
+          <%= link_to "แก้ไขสินค้า", edit_admin_product_path(@product), class: "inline-block bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" %>
+        </div>
+      <% end %>
       <h1 class="text-3xl font-bold text-gray-800"><%= @product.name %></h1>
       <p class="text-gray-500 mt-2">ประเภทสินค้า: <%= @product.category %></p>
       <p class="text-green-600 text-2xl font-semibold mt-2">ราคา <%= number_to_currency(@product.base_price, unit: "฿") %></p>
