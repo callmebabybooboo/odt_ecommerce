@@ -1,4 +1,60 @@
-<div>
-  <h1 class="font-bold text-4xl">Admin::Orders#show</h1>
-  <p>Find me in app/views/admin/orders/show.html.erb</p>
+<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-2xl font-bold text-blue-600 mb-4">รายละเอียดคำสั่งซื้อ</h1>
+
+  <p class="text-gray-700 mb-2">คำสั่งซื้อเลขที่: <strong>#<%= @order.id %></strong></p>
+  <p class="text-gray-700 mb-2">ลูกค้า: <%= @order.user.email %></p>
+  <p class="text-gray-700 mb-2">วันที่สั่งซื้อ: <%= l(@order.created_at, format: :long) %></p>
+  <p class="text-gray-700 mb-2">สถานะคำสั่งซื้อ: <%= render_order_status(@order) %></p>
+    <hr class="my-4" />
+  
+  <h3 class="font-semibold mb-2">ข้อมูลการจัดส่ง</h3>
+    <% if @order.delivery_method == "จัดส่ง" %>
+      <p class="text-green-700 font-semibold bg-green-100 px-3 py-1 rounded">ชื่อผู้รับ: <%= @order.shipping_name %></p>
+      <p class="text-green-700 font-semibold bg-green-100 px-3 py-1 rounded">ที่อยู่จัดส่ง: <%= @order.shipping_address %></p>
+      <p class="text-green-700 font-semibold bg-green-100 px-3 py-1 rounded">เบอร์โทรศัพท์: <%= @order.phone_number %></p>
+    <% else %>
+      <p class="text-green-700 font-semibold bg-green-100 px-3 py-1 rounded">รับสินค้าที่บริษัท</p>
+    <% end %>
+  <hr class="my-4" />
+
+  <h3 class="font-semibold mb-2">รายการสินค้า:</h3>
+  <table class="w-full text-left mb-4">
+    <thead>
+      <tr class="border-b">
+        <th class="py-2">สินค้า</th>
+        <th class="py-2">จำนวน</th>
+        <th class="py-2">ราคา</th>
+        <th class="py-2">รวม</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_items.each do |item| %>
+        <tr class="border-b">
+          <td class="py-2"><%= item.product.name %></td>
+          <td class="py-2"><%= item.quantity %></td>
+          <td class="py-2"><%= number_to_currency(item.price, unit: "฿") %></td>
+          <td class="py-2"><%= number_to_currency(item.total_price, unit: "฿") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p class="text-gray-700 mb-2">ยอดรวม: <%= number_to_currency(@order.total_price, unit: "฿") %></p>
+
+  <hr class="my-4" />
+
+  <h3 class="font-semibold mb-2">สถานะคำสั่งซื้อ</h3>
+  <% if @order.status != 2 %>
+    <%= form_with model: [:admin, @order], method: :patch, local: true do |f| %>
+      <div class="flex items-center space-x-4">
+        <%= f.select :status, Order::STATUS_MAP.map { |k, _| [I18n.t("order.statuses.#{k}"), k] }, {}, class: "border p-2 rounded" %>
+        <%= f.submit "อัปเดตสถานะ", class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" %>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-red-600 font-semibold">คำสั่งซื้อนี้ถูกยกเลิกแล้ว</p>
+  <% end %>
+
+  <div class="mt-6">
+    <%= link_to "← ย้อนกลับ", admin_orders_path, class: "text-blue-600 hover:underline" %>
+  </div>
 </div>

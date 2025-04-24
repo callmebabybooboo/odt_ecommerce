@@ -3,9 +3,9 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
 
   STATUS_MAP = {
-    0 => 'pending',
-    1 => 'paid',
-    2 => 'cancelled'
+    0 => "pending",
+    1 => "paid",
+    2 => "cancelled"
   }.freeze
 
   validates :total_price, numericality: { greater_than_or_equal_to: 0 }
