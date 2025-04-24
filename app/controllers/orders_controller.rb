@@ -38,6 +38,17 @@ class OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
   end
 
+  def cancel
+    @order = current_user.orders.find(params[:id])
+    if @order.pending?
+      @order.update(status: 2) # cancelled
+      redirect_to @order, notice: "ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว"
+    else
+      redirect_to @order, alert: "ไม่สามารถยกเลิกคำสั่งซื้อนี้ได้"
+    end
+  end
+  
+
   private
 
   def order_params

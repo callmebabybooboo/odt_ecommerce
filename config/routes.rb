@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :orders, only: [ :index, :new, :create, :show ] do
     member do
       patch :pay
+      patch :cancel
     end
   end
 

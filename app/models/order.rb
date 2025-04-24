@@ -4,7 +4,8 @@ class Order < ApplicationRecord
 
   STATUS_MAP = {
     0 => 'pending',
-    1 => 'paid'
+    1 => 'paid',
+    2 => 'cancelled'
   }.freeze
 
   validates :total_price, numericality: { greater_than_or_equal_to: 0 }
@@ -19,5 +20,9 @@ class Order < ApplicationRecord
 
   def paid?
     status == 1
+  end
+
+  def cancelled?
+    status == 2
   end
 end
