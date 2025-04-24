@@ -30,10 +30,6 @@
         <p class="text-gray-700 leading-relaxed"><%= @product.description %></p>
       </div>
 
-      <div class="mt-6">
-        <h2 class="text-red-700 leading-relaxed mb-1">จำนวนสินค้าคงเหลือ: <%= @product.stock %> </h2>
-      </div>
-
       <% if current_user.user? %>
         <div class="mt-6">
           <%= button_to "เพิ่มลงตะกร้า", cart_items_path(product_id: @product.id), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
