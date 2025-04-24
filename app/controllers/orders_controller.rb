@@ -47,7 +47,16 @@ class OrdersController < ApplicationController
       redirect_to @order, alert: "ไม่สามารถยกเลิกคำสั่งซื้อนี้ได้"
     end
   end
-  
+
+  def upload_slip
+    @order = current_user.orders.find(params[:id])
+    if params[:order] && params[:order][:payment_slip].present?
+      @order.payment_slip.attach(params[:order][:payment_slip])
+      redirect_to @order, notice: "อัปโหลดสลิปสำเร็จ!"
+    else
+      redirect_to @order, alert: "กรุณาแนบสลิป"
+    end
+  end
 
   private
 

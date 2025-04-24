@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     member do
       patch :pay
       patch :cancel
+      patch :upload_slip
     end
   end
 
