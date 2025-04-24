@@ -1,4 +1,8 @@
 th:
+  order:
+    statuses:
+      0: "รอดำเนินการ"
+      1: "ชำระเงินแล้ว"
   time:
     formats:
       long: "%-d %B %Y"
