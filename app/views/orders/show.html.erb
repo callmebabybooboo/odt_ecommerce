@@ -45,21 +45,27 @@
 
     <% if @order.pending? %>
         <div class="mt-6">
-            <h2 class="text-lg font-bold text-gray-800 mb-2">📲 สแกนเพื่อชำระเงิน</h2>
-            <%= image_tag "QR-code.png", alt: "PromptPay QR", class: "w-100 h-100 mx-auto" %>
+            <% if @order.payment_method == "โอน" %>
+                <h2 class="text-lg font-bold text-gray-800 mb-2">📲 สแกนเพื่อชำระเงิน</h2>
+                <%= image_tag "QR-code.png", alt: "PromptPay QR", class: "w-100 h-100 mx-auto" %>
 
-            <%= form_with model: @order, url: upload_slip_order_path(@order), local: true, html: { multipart: true }, class: "mt-4 space-y-4" do |f| %>
-            <div>
-                <%= f.label :payment_slip, "แนบสลิป", class: "block font-medium" %>
-                <%= f.file_field :payment_slip, class: "border rounded p-2 w-full" %>
-            </div>
-
-            <div class="flex justify-end gap-2">
+                <%= form_with model: @order, url: upload_slip_order_path(@order), local: true, html: { multipart: true }, class: "mt-4 space-y-4" do |f| %>
+                    <div>
+                        <%= f.label :payment_slip, "แนบสลิป", class: "block font-medium" %>
+                        <%= f.file_field :payment_slip, class: "border rounded p-2 w-full" %>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <%= link_to "ยกเลิกคำสั่งซื้อ", cancel_order_path(@order), method: :patch,
+                            data: { turbo_method: :patch, confirm: "แน่ใจหรือไม่ว่าต้องการยกเลิก?" },
+                            class: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded" %>
+                        <%= f.submit "ชำระเงิน", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
+                    </div>
+                <% end %> 
+            <% else %>
+            <div class="text-right">
                 <%= link_to "ยกเลิกคำสั่งซื้อ", cancel_order_path(@order), method: :patch,
                     data: { turbo_method: :patch, confirm: "แน่ใจหรือไม่ว่าต้องการยกเลิก?" },
                     class: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded" %>
-
-                <%= f.submit "ชำระเงิน", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
             </div>
             <% end %>
         </div>
