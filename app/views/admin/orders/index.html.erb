@@ -1,0 +1,31 @@
+<div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-2xl font-bold mb-6">รายการคำสั่งซื้อทั้งหมด</h1>
+
+  <table class="w-full text-left">
+    <thead>
+      <tr class="border-b">
+        <th class="py-2">#</th>
+        <th class="py-2">ลูกค้า</th>
+        <th class="py-2">สถานะ</th>
+        <th class="py-2">ยอดรวม</th>
+        <th class="py-2">วันที่</th>
+        <th class="py-2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class="border-b">
+          <td class="py-2">#<%= order.id %></td>
+          <td class="py-2"><%= order.user.email %></td>
+          <td class="py-2"><%= render_order_status(order) %></td>
+          <td class="py-2"><%= number_to_currency(order.total_price, unit: "฿") %></td>
+          <td class="py-2"><%= l(order.created_at, format: :short) %></td>
+          <td class="py-2">
+            <%= link_to "จัดการคำสั่งซื้อนี้", admin_order_path(order),
+                class: "inline-block bg-white border border-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-100 text-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

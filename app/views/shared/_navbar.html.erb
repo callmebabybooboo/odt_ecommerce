@@ -5,6 +5,7 @@
     <div class="flex items-center space-x-4">
         <% if user_signed_in? %>
             <% if current_user.admin? %>
+                <%= link_to "จัดการคำสั่งซื้อ", admin_orders_path, class: "text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-semibold" %>
                 <%= link_to "เพิ่มสินค้า", new_admin_product_path, class: "text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm font-semibold" %>
             <% end %>
             <% if current_user.user? %>
