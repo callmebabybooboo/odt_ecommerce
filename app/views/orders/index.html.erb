@@ -17,7 +17,7 @@
           <tr class="border-b">
             <td class="py-2">#<%= order.id %></td>
             <td class="py-2"><%= l(order.created_at, format: :short) %></td>
-            <td class="py-2"><%= order.status_text %></td>
+            <td class="py-2"><%= render_order_status(order) %></td>
             <td class="py-2"><%= number_to_currency(order.total_price, unit: "฿") %></td>
             <td class="py-2">
               <%= link_to "ดูรายละเอียด", order_path(order), class: "text-blue-600 hover:underline text-sm" %>
