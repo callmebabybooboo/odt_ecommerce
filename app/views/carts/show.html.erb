@@ -20,14 +20,14 @@
               <%= form_with model: item, url: cart_item_path(item), method: :patch, local: true do |f| %>
                 <div class="flex items-center space-x-2">
                   <%= f.number_field :quantity, min: 1, class: "w-16 border rounded px-2 py-1 text-center" %>
-                  <%= f.submit "อัปเดต", class: "text-sm text-blue-600 hover:underline" %>
+                  <%= f.submit "อัปเดต", class: "bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-full shadow-sm" %>
                 </div>
               <% end %>
             </td>
             <td class="py-2"><%= number_to_currency(item.product.base_price, unit: "฿") %></td>
             <td class="py-2"><%= number_to_currency(item.total_price, unit: "฿") %></td>
             <td class="py-2">
-              <%= button_to "ลบ", cart_item_path(item), method: :delete, data: { confirm: "แน่ใจนะคะว่าจะลบ?" }, class: "text-red-600" %>
+              <%= button_to "ลบ", cart_item_path(item), method: :delete, class: "bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-2 rounded-full shadow-sm" %>
             </td>
           </tr>
         <% end %>
