@@ -1,32 +1,32 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
 
+  def new
+    @order = Order.new
+  end
+
   def create
-    cart = current_user.cart
-    if cart.cart_items.empty?
-      redirect_to cart_path, alert: "ไม่มีสินค้าในตะกร้า"
-      return
-    end
+    @order = current_user.orders.build(order_params)
+    @order.total_price = current_user.cart.cart_items.sum(&:total_price)
+    @order.status = 0 # pending
 
-    order = current_user.orders.build(status: "pending")
-    total_price = 0
+    if @order.save
+      # add order items from cart items
+      current_user.cart.cart_items.each do |cart_item|
+        @order.order_items.create!(
+          product: cart_item.product,
+          quantity: cart_item.quantity,
+          price: cart_item.product.base_price
+        )
+      end
 
-    cart.cart_items.each do |item|
-      order.order_items.build(
-        product: item.product,
-        quantity: item.quantity,
-        price: item.product.base_price
-      )
-      total_price += item.product.base_price * item.quantity
-    end
+      # clear cart
+      current_user.cart.cart_items.destroy_all
 
-    order.total_price = total_price
-
-    if order.save
-      cart.cart_items.destroy_all
-      redirect_to order_path(order), notice: "สั่งซื้อสำเร็จ"
+      redirect_to order_path(@order), notice: "สั่งซื้อสำเร็จ!"
     else
-      redirect_to cart_path, alert: "เกิดข้อผิดพลาดในการสร้างคำสั่งซื้อ"
+      flash.now[:alert] = "ไม่สามารถทำการสั่งซื้อได้"
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -34,14 +34,15 @@ class OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
   end
 
-  def pay
-    @order = current_user.orders.find(params[:id])
+  private
 
-    if @order.pending?
-      @order.update(status: 1) # Assuming 1 is the status for paid
-      redirect_to @order, notice: "ชำระเงินเรียบร้อยแล้ว"
-    else
-      redirect_to @order, alert: "คำสั่งซื้อนี้ถูกชำระเงินไปแล้ว"
-    end
+  def order_params
+    params.require(:order).permit(
+      :delivery_method,
+      :shipping_address,
+      :shipping_name,
+      :phone_number,
+      :payment_method
+    )
   end
 end

@@ -39,9 +39,8 @@
         รวมทั้งหมด: 
         <%= number_to_currency(@cart_items.sum(&:total_price), unit: "฿") %>
       </p>
-      <%= button_to "ไปชำระเงิน", orders_path, method: :post,
-        class: "inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded",
-        data: { turbo: false } %>
+      <%= link_to "ไปชำระเงิน", new_order_path,
+        class: "inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
     </div>
 
   <% else %>

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resource :cart, only: [ :show ]
   resources :cart_items, only: [ :create, :update, :destroy ]
-  resources :orders, only: [:create, :show] do
+  resources :orders, only: [ :new, :create, :show ] do
     member do
       patch :pay
     end
