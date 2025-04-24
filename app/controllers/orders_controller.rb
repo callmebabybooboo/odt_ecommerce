@@ -33,4 +33,15 @@ class OrdersController < ApplicationController
   def show
     @order = current_user.orders.find(params[:id])
   end
+
+  def pay
+    @order = current_user.orders.find(params[:id])
+
+    if @order.pending?
+      @order.update(status: 1) # Assuming 1 is the status for paid
+      redirect_to @order, notice: "ชำระเงินเรียบร้อยแล้ว"
+    else
+      redirect_to @order, alert: "คำสั่งซื้อนี้ถูกชำระเงินไปแล้ว"
+    end
+  end
 end
