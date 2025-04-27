@@ -54,8 +54,6 @@ th:
             description: 
               blank: "คำอธิบายสินค้าห้ามเว้นว่าง"
             status: 
-              blank: "กรุณาเลือกสถานะ"
-            cover_image: 
+              inclusion: "กรุณาเลือกสถานะ"
+            cover_image_url: 
               blank: "รูปภาพสินค้าห้ามเว้นว่าง"
-              content_type_invalid: "รูปภาพสินค้าต้องเป็นไฟล์รูปภาพนามสกุล .jpg/.jpeg/.png เท่านั้น"
-              file_size_not_less_than: "ขนาดไฟล์รูปภาพสินค้าต้องไม่เกิน 10 MB"

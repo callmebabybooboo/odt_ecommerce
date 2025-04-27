@@ -1,6 +1,5 @@
 class Product < ApplicationRecord
   has_many :variants, dependent: :destroy
-  has_one_attached :cover_image
   has_many_attached :images
 
   has_many :cart_items
@@ -13,7 +12,7 @@ class Product < ApplicationRecord
   validates :description, presence: true
   validates :category, presence: true
   validates :base_price, presence: true
-  validates :status, presence: true
+  validates :status, inclusion: { in: STATUS_OPTIONS }
   validates :stock, presence: true
   validates :category, inclusion: { in: CATEGORIES }
   validates :base_price,
@@ -23,9 +22,18 @@ class Product < ApplicationRecord
   validates :stock,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 },
     presence: true
-  validates :cover_image,
-    attached: true,
-    content_type: [ "image/png", "image/jpeg" ],
-    size: { less_than: 10.megabytes }
-  validates :status, inclusion: { in: STATUS_OPTIONS }
+  validates :cover_image_url, presence: true
+  validate :validate_cover_image_url_format
+
+  private
+
+  def validate_cover_image_url_format
+    return if cover_image_url.blank?
+
+    uri = URI.parse(cover_image_url) rescue nil
+
+    unless uri&.is_a?(URI::HTTP) && uri.host.present?
+      errors.add(:cover_image_url, "ไม่สามารถเข้าถึงรูปได้ กรุณาตรวจสอบ URL ต้องเป็น URL ที่ถูกต้อง (ต้องขึ้นต้นด้วย http หรือ https)")
+    end
+  end
 end
