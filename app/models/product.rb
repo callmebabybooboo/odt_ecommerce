@@ -1,7 +1,5 @@
 class Product < ApplicationRecord
   has_many :variants, dependent: :destroy
-  has_many_attached :images
-
   has_many :cart_items
   has_many :carts, through: :cart_items
 

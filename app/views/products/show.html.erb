@@ -6,12 +6,17 @@
         <%= image_tag @product.cover_image_url, class: "w-full h-auto object-cover rounded" %>
       <% end %>
 
-      <% if @product.images.attached? %>
-        <div class="grid grid-cols-3 gap-2 mt-4">
-          <% @product.images.each do |image| %>
-            <%= image_tag image.variant(resize_to_limit: [150, 150]).processed, class: "rounded object-cover w-full h-auto border" %>
+      <% if @product.images_urls.present? %>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <% @product.images_urls.each do |image_url| %>
+            <%= image_tag image_url, 
+              class: "rounded object-cover border", 
+              width: 80, 
+              height: 80 %>
           <% end %>
         </div>
+      <% else %>
+        <p class="text-gray-500 mt-4">ไม่มีรูปภาพเพิ่มเติม</p>
       <% end %>
     </div>
 

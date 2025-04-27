@@ -42,7 +42,7 @@
       </label>
       <%= f.text_field :cover_image_url,
         id: "product_cover_image_url",
-        placeholder: "วางลิงก์ URL ของรูปสินค้า",
+        placeholder: "วางลิงก์ URL รูปภาพสินค้าหลัก",
         class: "w-full p-3 border rounded-lg",
         data: {
           action: "input->image-preview-single#preview",
@@ -61,25 +61,44 @@
       <% end %>
     </div>
 
-      <div data-controller="image-preview">
-        <label for="product_images"
-          class="w-full p-3 border rounded-lg text-gray-800 block text-left cursor-pointer hover:bg-gray-100">
-          เลือกรูปภาพสินค้าเพิ่มเติม
-        </label>
-        <%= f.file_field :images,
-              multiple: true,
-              id: "product_images",
-              class: "hidden",
-              data: {
-                action: "change->image-preview#previewMultiple",
-                image_preview_target: "input"
-              } %>
-        <div data-image-preview-target="placeholder" class="mt-2 text-gray-500 text-sm">
-          ยังไม่มีภาพที่เลือก
-        </div>
-        <div class="mt-2 grid grid-cols-3 gap-2" data-image-preview-target="previews">
+    <div data-controller="image-preview">
+      <label for="product_cover_image_url"
+        class="block text-gray-700">URL รูปภาพสินค้า
+      </label>
+      <div data-image-preview-target="inputs" class="space-y-2">
+        <div class="flex gap-2 items-center">
+          <input type="text"
+            name="product[images_urls][]"
+            placeholder="วางลิงก์ URL รูปสินค้า"
+            class="w-full p-3 border rounded-lg"
+            data-action="input->image-preview#preview"
+            data-image-preview-target="input">
+          <button 
+            type="button" 
+            class="px-3 py-2 bg-red-500 text-white rounded cursor-pointer" 
+            data-action="click->image-preview#removeInput">
+            ลบ
+          </button>
         </div>
       </div>
+      <button 
+        type="button" 
+        class="mt-4 bg-blue-500 text-white px-4 py-2 rounded cursor-pointer" 
+        data-action="click->image-preview#addInput">
+        + เพิ่มรูป
+      </button>
+      <div class="mt-4 grid grid-cols-3 gap-2" data-image-preview-target="previews"></div>
+    </div>
+    <% if product.persisted? && product.images_urls.present? %>
+      <div class="mt-2">
+        <p class="text-sm text-gray-500">รูปภาพสินค้าปัจจุบัน:</p>
+        <div class="grid grid-cols-3 gap-2">
+      <% product.images_urls.each do |image_url| %>
+        <%= image_tag image_url, class: "mt-1 rounded w-48 h-48 object-cover" %>
+      <% end %>
+        </div>
+      </div>
+    <% end %>
 
     <div class="mt-6 flex gap-2">
       <%= f.submit (product.persisted? ? "บันทึกสินค้า" : "สร้างสินค้า"),
