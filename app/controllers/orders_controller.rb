@@ -50,11 +50,13 @@ class OrdersController < ApplicationController
 
   def upload_slip
     @order = current_user.orders.find(params[:id])
-    if params[:order] && params[:order][:payment_slip].present?
-      @order.payment_slip.attach(params[:order][:payment_slip])
-      redirect_to @order, notice: "อัปโหลดสลิปสำเร็จ!"
+    slip_url = params[:order][:payment_slip_url]
+
+    if slip_url.present?
+      @order.update(payment_slip_url: slip_url)
+      redirect_to @order, notice: "แนบสลิปสำเร็จแล้ว"
     else
-      redirect_to @order, alert: "กรุณาแนบสลิป"
+      redirect_to @order, alert: "กรุณากรอก URL ของสลิป"
     end
   end
 

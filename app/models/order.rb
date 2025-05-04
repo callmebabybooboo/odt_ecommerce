@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :order_items, dependent: :destroy
-  has_one_attached :payment_slip
 
   STATUS_MAP = {
     0 => "pending",
