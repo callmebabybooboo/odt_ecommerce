@@ -42,14 +42,15 @@
 
   <hr class="my-4" />
 
-  <% if @order.payment_slip.attached? %>
-    <div class="mt-6">
-      <h3 class="font-semibold mb-2">สลิปการชำระเงิน</h3>
-      <%= image_tag @order.payment_slip.variant(resize_to_limit: [400, 400]),
-          class: "rounded shadow border" %>
-    </div>
-  <% else %>
-    <p class="text-gray-600 italic mt-6">ยังไม่มีสลิปการชำระเงิน</p>
+  <% if @order.payment_method == "โอน" %>
+    <% if @order.payment_slip_url.present? %>
+      <div class="mt-6">
+        <h3 class="font-semibold mb-2">สลิปการชำระเงิน</h3>
+        <%= image_tag @order.payment_slip_url, class: "rounded shadow border w-64 h-auto" %>
+      </div>
+    <% else %>
+      <p class="text-gray-600 italic mt-6">ยังไม่มีสลิปการชำระเงิน</p>
+    <% end %>
   <% end %>
 
   <h3 class="font-semibold mb-2">สถานะคำสั่งซื้อ</h3>
