@@ -50,7 +50,7 @@ gem "image_processing", "~> 1.2"
 
 gem "mini_magick"
 
-gem 'cloudinary', '~> 1.26'
+gem 'cloudinary', '~> 2.3'
 
 gem 'activestorage-cloudinary-service'
 
